@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  guardlayer:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      # Which LLM API to forward to
+      GUARDLAYER_TARGET: ${GUARDLAYER_TARGET:-https://api.openai.com}
+      # Optional: enable Claude deep analysis
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    volumes:
+      # Mount a local dir so reports can be written out
+      - ./reports:/app/reports
+    restart: unless-stopped
